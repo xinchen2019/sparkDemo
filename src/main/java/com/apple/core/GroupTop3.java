@@ -40,6 +40,7 @@ public class GroupTop3 {
         JavaPairRDD<String, Iterable<Integer>> top3Score = groupedPairs.mapToPair(
                 new PairFunction<Tuple2<String, Iterable<Integer>>, String, Iterable<Integer>>() {
                     private static final long serialVersionUID = 1L;
+
                     @Override
                     public Tuple2<String, Iterable<Integer>> call(Tuple2<String, Iterable<Integer>> classScores) throws Exception {
                         Integer[] top3 = new Integer[3];
@@ -66,6 +67,7 @@ public class GroupTop3 {
 
         top3Score.foreach(new VoidFunction<Tuple2<String, Iterable<Integer>>>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void call(Tuple2<String, Iterable<Integer>> t) throws Exception {
                 System.out.println("class: " + t._1);

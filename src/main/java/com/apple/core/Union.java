@@ -21,7 +21,7 @@ public class Union {
                 .setAppName("Union")
                 .setMaster("local");
         JavaSparkContext sc = new JavaSparkContext(conf);
-        String[] arr1 = {"长江大桥1","长江大桥2","长江大桥3"};
+        String[] arr1 = {"长江大桥1", "长江大桥2", "长江大桥3"};
         Integer[] arr2 = {4, 5, 6};
 
         JavaRDD arr1RDD = sc.parallelize(Arrays.asList(arr1));

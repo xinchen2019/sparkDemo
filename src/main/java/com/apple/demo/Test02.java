@@ -27,7 +27,7 @@ public class Test02 {
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, 1);
             rs = pstmt.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 String name = rs.getString(1);
                 System.out.println(name);
             }

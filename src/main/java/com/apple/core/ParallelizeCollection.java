@@ -32,6 +32,7 @@ public class ParallelizeCollection {
 
         int sum = numberRDD.reduce(new Function2<Integer, Integer, Integer>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public Integer call(Integer num1, Integer num2) throws Exception {
                 return num1 + num2;

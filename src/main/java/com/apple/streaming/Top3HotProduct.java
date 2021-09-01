@@ -52,13 +52,14 @@ public class Top3HotProduct {
         JavaPairDStream<String, Integer> categoryProductPairsDstream = productClickLogsDstream.mapToPair(
                 new PairFunction<String, String, Integer>() {
                     private static final long serialVersionUID = 1L;
+
                     @Override
                     public Tuple2<String, Integer> call(String productClickLog)
                             throws Exception {
                         String[] productClickLogSplited = productClickLog.split(" ");
 
-                        for(int i=0;i<productClickLogSplited.length;i++){
-                            System.out.println(i+": "+productClickLogSplited[i]);
+                        for (int i = 0; i < productClickLogSplited.length; i++) {
+                            System.out.println(i + ": " + productClickLogSplited[i]);
                         }
                         return new Tuple2<String, Integer>(
                                 productClickLogSplited[2] + "_" + productClickLogSplited[1],
@@ -70,6 +71,7 @@ public class Top3HotProduct {
         JavaPairDStream<String, Integer> categoryProductCountsDStream = categoryProductPairsDstream.reduceByKeyAndWindow(
                 new Function2<Integer, Integer, Integer>() {
                     private static final long serialVersionUID = 1L;
+
                     @Override
                     public Integer call(Integer v1, Integer v2) throws Exception {
                         return v1 + v2;
@@ -81,6 +83,7 @@ public class Top3HotProduct {
 
         categoryProductCountsDStream.foreachRDD(new VoidFunction<JavaPairRDD<String, Integer>>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void call(JavaPairRDD<String, Integer> categoryProductCountsRDD) throws Exception {
                 JavaRDD<Row> categoryProductCountRowRDD = categoryProductCountsRDD.map(new Function<Tuple2<String, Integer>, Row>() {

@@ -30,6 +30,7 @@ public class PrintElement {
         closureNumber.add(0);
         numbersRDD.foreach(new VoidFunction<Integer>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void call(Integer num) throws Exception {
                 System.out.println(num);

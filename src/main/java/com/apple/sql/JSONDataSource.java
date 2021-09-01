@@ -79,6 +79,7 @@ public class JSONDataSource {
         Dataset goodStudentInfosDF = sqlContext.sql(sql);
         JavaPairRDD<String, Tuple2<Integer, Integer>> goodStudentsRDD = goodStudentScoresDF.toJavaRDD().mapToPair(new PairFunction<Row, String, Integer>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public Tuple2<String, Integer> call(Row row) throws Exception {
                 return new Tuple2<String, Integer>(
@@ -87,26 +88,28 @@ public class JSONDataSource {
             }
         }).join(goodStudentInfosDF.toJavaRDD().mapToPair(
                 new PairFunction<Row, String, Integer>() {
-            private static final long serialVersionUID = 1L;
-            @Override
-            public Tuple2<String, Integer> call(Row row) throws Exception {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public Tuple2<String, Integer> call(Row row) throws Exception {
 
 
-                return new Tuple2<String, Integer>(
-                        row.getString(0),
-                        Integer.valueOf(String.valueOf(row.getLong(1))));
-            }
-        }));
+                        return new Tuple2<String, Integer>(
+                                row.getString(0),
+                                Integer.valueOf(String.valueOf(row.getLong(1))));
+                    }
+                }));
 
 
         JavaRDD<Row> goodStudentRowsRDD = goodStudentsRDD.map(
                 new Function<Tuple2<String, Tuple2<Integer, Integer>>, Row>() {
-            private static final long serialVersionUID = 1L;
-            @Override
-            public Row call(Tuple2<String, Tuple2<Integer, Integer>> tuple) throws Exception {
-                return RowFactory.create(tuple._1, tuple._2._1, tuple._2._2);
-            }
-        });
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public Row call(Tuple2<String, Tuple2<Integer, Integer>> tuple) throws Exception {
+                        return RowFactory.create(tuple._1, tuple._2._1, tuple._2._2);
+                    }
+                });
 
 
         List<StructField> structFields = new ArrayList<StructField>();

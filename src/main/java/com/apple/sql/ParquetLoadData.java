@@ -30,6 +30,7 @@ public class ParquetLoadData {
         Dataset<Row> userNamesDF = sqlContext.sql("select name from users");
         List<String> userNames = userNamesDF.javaRDD().map(new Function<Row, String>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public String call(Row row) throws Exception {
                 return "Name: " + row.getString(0);

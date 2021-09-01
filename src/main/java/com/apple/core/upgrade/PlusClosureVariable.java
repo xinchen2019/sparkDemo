@@ -33,6 +33,7 @@ public class PlusClosureVariable {
         closureNumber.add(0);
         numbersRDD.foreach(new VoidFunction<Integer>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void call(Integer num) throws Exception {
                 int closureNumberValue = closureNumber.get(0);

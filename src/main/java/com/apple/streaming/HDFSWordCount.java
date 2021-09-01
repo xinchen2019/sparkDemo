@@ -36,6 +36,7 @@ public class HDFSWordCount {
 
         JavaDStream<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public Iterator<String> call(String s) throws Exception {
                 return Arrays.asList(s.split(" ")).iterator();
@@ -44,6 +45,7 @@ public class HDFSWordCount {
 
         JavaPairDStream pairs = words.mapToPair(new PairFunction<String, String, Integer>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public Tuple2<String, Integer> call(String s) throws Exception {
                 return new Tuple2<>(s, 1);
@@ -52,6 +54,7 @@ public class HDFSWordCount {
 
         JavaPairDStream<String, Integer> wordCounts = pairs.reduceByKey(new Function2<Integer, Integer, Integer>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public Integer call(Integer v1, Integer v2) throws Exception {
                 return v1 + v2;

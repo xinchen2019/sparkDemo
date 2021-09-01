@@ -44,6 +44,7 @@ public class PersistWordcount {
         JavaDStream<String> words = lines.flatMap(
                 new FlatMapFunction<String, String>() {
                     private static final long serialVersionUID = 1L;
+
                     @Override
                     public Iterator<String> call(String line) throws Exception {
                         return Arrays.asList(line.split(" ")).iterator();
@@ -53,6 +54,7 @@ public class PersistWordcount {
         JavaPairDStream<String, Integer> pairs = words.mapToPair(
                 new PairFunction<String, String, Integer>() {
                     private static final long serialVersionUID = 1L;
+
                     @Override
                     public Tuple2<String, Integer> call(String word)
                             throws Exception {
@@ -63,6 +65,7 @@ public class PersistWordcount {
         JavaPairDStream<String, Integer> wordCounts = pairs.updateStateByKey(
                 new Function2<List<Integer>, Optional<Integer>, Optional<Integer>>() {
                     private static final long serialVersionUID = 1L;
+
                     @Override
                     public Optional<Integer> call(List<Integer> values, Optional<Integer> state) throws Exception {
                         Integer newValue = 0;
@@ -81,6 +84,7 @@ public class PersistWordcount {
             public void call(JavaPairRDD<String, Integer> wordCountsRDD) throws Exception {
                 wordCountsRDD.foreachPartition(new VoidFunction<Iterator<Tuple2<String, Integer>>>() {
                     private static final long serialVersionUID = 1L;
+
                     @Override
                     public void call(Iterator<Tuple2<String, Integer>> wordCounts) throws Exception {
                         Connection conn = ConnectionPool.getConnection();

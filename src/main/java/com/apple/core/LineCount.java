@@ -30,24 +30,28 @@ public class LineCount {
         JavaRDD lines = sc.textFile("data/hello.txt");
         lines.flatMap(new FlatMapFunction<String, String>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public Iterator call(String str) throws Exception {
                 return Arrays.asList(str.split(" ")).iterator();
             }
         }).mapToPair(new PairFunction<String, String, Integer>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public Tuple2<String, Integer> call(String s) throws Exception {
                 return new Tuple2<String, Integer>(s, 1);
             }
         }).reduceByKey(new Function2<Integer, Integer, Integer>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public Integer call(Integer int0, Integer int1) throws Exception {
                 return int0 + int1;
             }
         }).foreach(new VoidFunction<Tuple2<String, Integer>>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void call(Tuple2<String, Integer> tuple) throws Exception {
                 System.out.println(tuple._1 + ":" + tuple._2);
