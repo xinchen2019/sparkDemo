@@ -52,7 +52,8 @@ public class HDFSWordCount {
             }
         });
 
-        JavaPairDStream<String, Integer> wordCounts = pairs.reduceByKey(new Function2<Integer, Integer, Integer>() {
+        JavaPairDStream<String, Integer> wordCounts = pairs.reduceByKey(
+                new Function2<Integer, Integer, Integer>() {
             private static final long serialVersionUID = 1L;
 
             @Override
