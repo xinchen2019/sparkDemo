@@ -1,4 +1,4 @@
-package sql;
+package com.apple.sql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

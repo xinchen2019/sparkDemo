@@ -1,4 +1,4 @@
-package sql;
+package com.apple.sql;
 
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
