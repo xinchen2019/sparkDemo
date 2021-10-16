@@ -32,7 +32,6 @@ public class ActionOperation {
                 new Function<Integer, Integer>() {
                     private static final long serialVersionUID = 1L;
 
-
                     @Override
                     public Integer call(Integer v1) throws Exception {
                         return v1 * 2;
