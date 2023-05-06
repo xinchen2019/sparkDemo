@@ -7,6 +7,7 @@ import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairDStream;
+import org.apache.spark.streaming.api.java.JavaReceiverInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 import scala.Tuple2;
 
@@ -16,23 +17,25 @@ import java.util.Iterator;
 
 /**
  * @Program: spark-java
- * @ClassName: HDFSWordCount
+ * @ClassName: WordCount
  * @Description: TODO
  * @Author Mr.Apple
  * @Create: 2021-08-17 10:28
  * @Version 1.1.0
  **/
-public class HDFSWordCount {
+public class CustomerReceiverWordCount {
     public static void main(String[] args) throws InterruptedException {
 
-        SparkConf conf = new SparkConf().setMaster("local[*]")
-                .setAppName("HDFSWordCount");
+        SparkConf conf = new SparkConf()
+                .setMaster("local[*]")
+                .setAppName("CustomerReceiverWordCount");
 
-
-        JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(5));
+        System.setProperty("HADOOP_USER_NAME", "ubuntu");
+        JavaStreamingContext jssc = new JavaStreamingContext(conf, Durations.seconds(1));
         jssc.sparkContext().setLogLevel("ERROR");
-        JavaDStream<String> lines =
-                jssc.textFileStream("hdfs://master:9000/wordcount_dir");
+        JavaReceiverInputDStream<String> lines =
+                jssc.receiverStream(new JavaCustomReceiver("master", 9999));
+
 
         JavaDStream<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
             private static final long serialVersionUID = 1L;
@@ -61,11 +64,9 @@ public class HDFSWordCount {
                         return v1 + v2;
                     }
                 });
-        Thread.sleep(5000);
         wordCounts.print();
         jssc.start();
         jssc.awaitTermination();
         jssc.close();
-
     }
 }

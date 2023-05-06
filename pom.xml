@@ -13,12 +13,13 @@
         <encoding>UTF-8</encoding>
         <spark.version>2.4.0</spark.version>
         <hadoop.version>2.7.2</hadoop.version>
-        <spark.streaming.kafka.version>2.4.8</spark.streaming.kafka.version>
+        <spark.streaming.kafka.version>2.4.0</spark.streaming.kafka.version>
         <mysql.version>5.1.46</mysql.version>
         <hive.version>2.3.5</hive.version>
         <http.version>4.4.1</http.version>
         <junit.version>3.8.1</junit.version>
         <scala.version>2.11.8</scala.version>
+        <kafka.version>2.1.0</kafka.version>
     </properties>
     <dependencies>
         <dependency>
@@ -59,8 +60,14 @@
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-streaming-kafka-0-8_2.11</artifactId>
+            <artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
             <version>${spark.streaming.kafka.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.11</artifactId>
+            <version>${kafka.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -91,6 +98,12 @@
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-streaming-flume_2.11</artifactId>
             <version>2.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <build>
